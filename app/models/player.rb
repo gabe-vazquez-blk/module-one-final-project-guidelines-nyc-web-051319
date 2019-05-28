@@ -10,10 +10,13 @@ class Player < ActiveRecord::Base
       Purchase.create(player_id: self.id, game_id: game.id)
       "You have purchsed #{game.title} for $#{game.price}!"
     else
-      "Sorry not enough money!"
+      "Sorry, not enough money!"
     end
   end
 
+  def buy_game_by_title(title)
+
+  end
 
   def return_game(purchase)
     game = Game.find(purchase.game_id)

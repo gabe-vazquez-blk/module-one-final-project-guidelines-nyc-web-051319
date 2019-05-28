@@ -8,4 +8,14 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def self.all_by_title
+    self.all.map do |game|
+      game.title
+    end
+  end
+
+  def select_game_by_title
+    
+  end
+
 end
