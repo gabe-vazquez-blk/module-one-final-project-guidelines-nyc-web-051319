@@ -4,6 +4,7 @@ class Player < ActiveRecord::Base
   has_many :games, through: :purchases
 
   validates :username, uniqueness: true
+  validates_numericality_of :wallet, :integer_only => true, :gte => 0
 
   def buy_game(game)
     if self.wallet >= game.price
@@ -22,7 +23,7 @@ class Player < ActiveRecord::Base
 
   def return_game(purchase)
     game = Game.find(purchase.game_id)
-    self.wallet += game.price * 0.5
+    self.wallet += game.price / 2
     purchase.destroy
     self.reload
   end

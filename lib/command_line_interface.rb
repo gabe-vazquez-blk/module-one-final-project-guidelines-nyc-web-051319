@@ -1,24 +1,24 @@
 require 'pry'
 class CommandLineInterface
 
-  # def greet
-  #   puts Rainbow("Welcome to Game Shop! 🎮").red.blink
-  #   puts ""
-  # end
-
   def greet
-    mario
+    puts Rainbow("Welcome to Game Shop! 🎮").red.blink
+    puts ""
   end
 
-  def mario
-    Catpix::print_image "./lib/Mario2.png",
-        :limit_x => 1,
-        :limit_y => 1,
-        :center_x => true,
-        :center_y => true,
-        :bg_fill => true,
-        :resolution => "high"
-  end
+  # def greet
+  #   mario
+  # end
+  #
+  # def mario
+  #   Catpix::print_image "./lib/Mario2.png",
+  #       :limit_x => 1,
+  #       :limit_y => 1,
+  #       :center_x => true,
+  #       :center_y => true,
+  #       :bg_fill => true,
+  #       :resolution => "high"
+  # end
 
   def are_you_a_player
     puts Rainbow("Are you a returning player?(y/n)").skyblue
