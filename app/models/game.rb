@@ -14,8 +14,28 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def select_game_by_title
-    
+  def self.all_by_genre
+    self.all.map do |game|
+      game.genre
+    end.uniq
+  end
+
+  def self.hash_of_genres
+    arr = Game.all_by_genre
+    arr.map {|genre| [arr.find_index(genre) + 1, genre] }.to_h
+  end
+
+  def self.puts_num_genre
+    arr = Game.all_by_genre
+    arr.each do |genre|
+      puts "[#{arr.find_index(genre) + 1}] #{genre}"
+    end
+  end
+
+  def self.puts_title_with_index
+    Game.all.each do |game|
+      puts "[#{game.id}] #{game.title}"
+    end
   end
 
 end

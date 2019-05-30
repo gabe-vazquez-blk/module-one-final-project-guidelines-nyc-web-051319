@@ -4,4 +4,4 @@ cli = CommandLineInterface.new
 
 cli.greet
 
-cli.create_player
+cli.are_you_a_player
