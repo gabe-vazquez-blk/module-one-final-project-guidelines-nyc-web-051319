@@ -4,11 +4,12 @@ class Player < ActiveRecord::Base
   has_many :games, through: :purchases
 
   validates :username, uniqueness: true
-  validates_numericality_of :wallet, :integer_only => true, :gte => 0
+  # validates_numericality_of :wallet, :greater_than_or_equal_to => 0
 
   def buy_game(game)
     if self.wallet >= game.price
-      self.wallet -= game.price
+      money = self.wallet - game.price
+      self.update(wallet: money)
       self.reload
       Purchase.create(player_id: self.id, game_id: game.id)
       "You have purchsed #{game.title} for $#{game.price}!"
@@ -23,7 +24,8 @@ class Player < ActiveRecord::Base
 
   def return_game(purchase)
     game = Game.find(purchase.game_id)
-    self.wallet += game.price / 2
+    money = self.wallet + (game.price / 2)
+    self.update(wallet: money)
     purchase.destroy
     self.reload
   end

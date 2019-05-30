@@ -84,14 +84,24 @@ class CommandLineInterface
     username = gets.chomp
     player = Player.create(username: username, wallet: wallet=0)
     if player.valid?
-      puts "How much money would you like to put in your gaming wallet?"
-      money = gets.chomp
-      player.update(wallet: money.to_i)
-      puts "Welcome #{player.username} you have $#{player.wallet}!"
-      buy_or_sell(player)
+      postive_money(player)
     else
       puts "Please select a different username."
       create_player
+    end
+  end
+
+  def postive_money(player)
+    puts "How much money would you like to put in your gaming wallet?"
+    money = gets.chomp
+    money = money.to_i
+    if money.positive? && money <=100000
+      player.update(wallet: money)
+      puts "Welcome #{player.username} you have $#{player.wallet}!"
+      buy_or_sell(player)
+    else
+      puts "Please type in an integer between 0 and 100,000."
+      postive_money(player)
     end
   end
 
@@ -154,6 +164,7 @@ class CommandLineInterface
 
   def buy_more_games(player) #buy_or_sell [3]
     puts "What games would like to buy?"
+    puts "All games are $60."
     Game.puts_title_with_index
     puts "Select game by number"
     answer = gets.chomp
@@ -198,7 +209,8 @@ class CommandLineInterface
     if game && player.my_games.include?(game.title)
       purchase = player.find_purchase(game)
       player.return_game(purchase)
-      puts "You sold #{game.title}"
+      puts "You sold #{game.title}."
+      puts "You now have $#{player.wallet} in your wallet"
     else
       puts "Invalid Entry"
       selling_games(player)
@@ -207,9 +219,15 @@ class CommandLineInterface
 
   def add_to_wallet(player)
     puts "How much would you like to add?"
-    money = player.wallet + gets.chomp.to_i
-    player.update(wallet: money)
-    puts "You have $#{player.wallet}."
+    amount = gets.chomp.to_i
+    if amount.positive? && amount <= 100000
+      money = player.wallet + amount
+      player.update(wallet: money)
+      puts "You have $#{player.wallet}."
+    else
+      puts "Please type in an integer between 0 and 100,000."
+      add_to_wallet(player)
+    end
     buy_or_sell(player)
   end
 
