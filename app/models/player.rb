@@ -12,9 +12,9 @@ class Player < ActiveRecord::Base
       self.update(wallet: money)
       self.reload
       Purchase.create(player_id: self.id, game_id: game.id)
-      "You have purchsed #{game.title} for $#{game.price}!"
+      puts Rainbow("You have purchsed #{game.title} for $#{game.price}!").pink
     else
-      "Sorry, not enough money!"
+      puts Rainbow("Sorry, not enough money!").pink
     end
   end
 
@@ -33,6 +33,12 @@ class Player < ActiveRecord::Base
   def self.name_player
     self.all.map do |player|
       player.username
+    end
+  end
+
+  def self.puts_name_player
+    self.name_player.each do |player|
+      puts Rainbow("#{player}").pink
     end
   end
   #
@@ -60,6 +66,14 @@ class Player < ActiveRecord::Base
     end
   end
 
+  def puts_my_games
+    count = 1
+    self.my_games.each do |game|
+      puts Rainbow("#{count}. #{game}").blue
+      count += 1
+    end
+  end
+
   def self.player_usernames
     self.all.map do |player|
       player.username
@@ -68,7 +82,7 @@ class Player < ActiveRecord::Base
 
   def puts_my_game_id
     self.games.each do |game|
-      puts "[#{game.id}] #{game.title}"
+      puts Rainbow("[#{game.id}] #{game.title}").blue
     end
   end
 

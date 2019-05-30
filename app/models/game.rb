@@ -14,6 +14,12 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def self.all_by_title_puts
+    self.all_by_title.each do |game|
+      puts Rainbow("#{game}").blue
+    end
+  end
+
   def self.all_by_genre
     self.all.map do |game|
       game.genre
@@ -28,13 +34,13 @@ class Game < ActiveRecord::Base
   def self.puts_num_genre
     arr = Game.all_by_genre
     arr.each do |genre|
-      puts "[#{arr.find_index(genre) + 1}] #{genre}"
+      puts Rainbow("[#{arr.find_index(genre) + 1}] #{genre}").blue
     end
   end
 
   def self.puts_title_with_index
     Game.all.each do |game|
-      puts "[#{game.id}] #{game.title}"
+      puts Rainbow("[#{game.id}] #{game.title}").blue
     end
   end
 
