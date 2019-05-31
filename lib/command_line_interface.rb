@@ -288,9 +288,12 @@ class CommandLineInterface
   end
 
   def closing_time #buy_or_sell [5]
+    pid = fork{ exec "killall", "afplay" }
     system "clear"
+    pid = fork{ exec "afplay","lib/Mario Head Clips - Goodbye (6).mp3"}
     farewell = Artii::Base.new :font => 'slant'
     puts Rainbow(farewell.asciify('Thanks for stopping by!!!')).goldenrod.blink
+    sleep 4.0
     pid = fork{ exec "killall", "afplay" }
     exit
   end
